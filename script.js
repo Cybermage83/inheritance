@@ -5,39 +5,41 @@
       inherit   = inherit  || null;
       
       console.log('this',this,'namespace',namespace,'inherit',inherit);
-      
-      arguments.callee.prototype = {
-        value:10,
-        something:function(){return 'something';},
-        getVal: function(){return this.value;},
-        add:function(namespace,inherit){
-                var D = function(){};
-
-                D.prototype = this;
-                D.prototype[namespace] = inherit;
-                D.prototype.constructor = D;
-                return new D();
-            }
+      if(this === window){
+        arguments.callee.prototype = {
+          count:(this ===  window) ? 0 : this.count+=1,
+          value:10,
+          something:function(){return 'something';},
+          getVal: function(){return this.value;},
+          add:function(namespace,inherit){
+                  var D = function(){};
+  
+                  D.prototype = this;
+                  D.prototype[namespace] = inherit;
+                  D.prototype.constructor = D;
+                  return new D();
+              }
+          
+          };
         
-        };
-      
-      if(namespace !== 'undefined' && namespace !== null && namespace !== '' && this === window){
-        var F = function(){};
-        F.prototype = inherit;
-        arguments.callee.prototype[namespace] = new F();
-        return arguments.callee;
-      }else if(namespace !== 'undefined' && namespace !== null && namespace !== '' && this !== window){console.log('object!');
-        var X = function(){};
+        if(namespace !== 'undefined' && namespace !== null && namespace !== '' && this === window){
+          var F = function(){};
+          F.prototype = inherit;
+          arguments.callee.prototype[namespace] = new F();
+          return arguments.callee;
+        }else if(namespace !== 'undefined' && namespace !== null && namespace !== '' && this !== window){console.log('object!');
+          var X = function(){};
+          
+          X.prototype = this;
+          X.prototype[namespace] = inherit;
+          X.prototype.constructor = X;                                                                                               
+          return new X();
+        }
         
-        X.prototype = this;
-        X.prototype[namespace] = inherit;
-        X.prototype.constructor = X;                                                                                               
-        return new X();
-      }
-      
-      return (this === window) ? arguments.callee : this;
-      
-    };
+        return (this === window) ? arguments.callee : this;
+        
+      };
+    }
     return menu;
   })();
 
