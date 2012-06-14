@@ -1,8 +1,11 @@
 (function(win){
   var menu = (function(){
     var menu = function(namespace,inherit){
+      namespace = namepace || null;
+      inherit   = inherit  || null;
+      
       console.log('this',this,'namespace',namespace,'inherit',inherit);
-      var temp = function(){};
+      
       arguments.callee.prototype = {
         value:10,
         something:function(){return 'something';},
@@ -32,7 +35,7 @@
         return new X();
       }
       
-      //return (this === window) ? arguments.callee : this;
+      return (this === window) ? arguments.callee : this;
       
     };
     return menu;
@@ -53,7 +56,7 @@
         //var d = menu('HP',helper);
 //        var a = new menu('III',d.prototype);
        var c = menu('other',helper);
-        c = new c(null,null);
+        c = new c();
         var i = c.add('Help',helper);
         i = i.add('new',other);
 //  /      c = c.add('other',other);
