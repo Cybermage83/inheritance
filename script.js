@@ -1,7 +1,7 @@
 (function(win){
   var menu = (function(){
     var menu = function(namespace,inherit){
-      namespace = namepace || null;
+      namespace = namespace || null;
       inherit   = inherit  || null;
       
       console.log('this',this,'namespace',namespace,'inherit',inherit);
