@@ -38,8 +38,8 @@
         
         return (this === window) ? arguments.callee : this;
         
-      };
-    }
+      }
+    };
     return menu;
   })();
 
